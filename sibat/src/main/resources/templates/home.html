@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Homepage</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode</th>
+                <th>Nama</th>
+                <th>Harga</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="obat, iterationStatus : ${list_obat}"
+                th:style="${iterationStatus.even} ? 'color: blue'">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${obat.kode}"></td>
+                <td th:text="${obat.nama}"></td>
+                <td th:text="${obat.harga}"></td>
+                <td>
+                    <button type="button" href="#" class="btn btn-sm">Lihat</button>
+                    <button type="button" href="#" class="btn btn-sm">Ubah</button>
+                    <button type="button" href="#" class="btn btn-danger btn-sm">Hapus</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <button type="button" href="#" class="btn btn-sm">Ubah</button>
+    <!--    <form th:action="@{/menu/add/}+${resto.idRestoran}">-->
+<!--        <button class="btn btn-primary btn-sm">-->
+<!--            Add Menu-->
+<!--        </button>-->
+<!--    </form>-->
+</body>
+</html>
