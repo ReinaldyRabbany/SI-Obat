@@ -26,7 +26,7 @@
                 <td th:text="${obat.nama}"></td>
                 <td th:text="${obat.harga}"></td>
                 <td>
-                    <button type="button" href="#" class="btn btn-sm">Lihat</button>
+                    <a th:href="@{/obat/view?noReg={noReg}(noReg=${obat.nomorRegistrasi})}"><button type="submit" class="btn btn-sm">Lihat</button></a>
                     <button type="button" href="#" class="btn btn-sm">Ubah</button>
                     <button type="button" href="#" class="btn btn-danger btn-sm">Hapus</button>
                 </td>

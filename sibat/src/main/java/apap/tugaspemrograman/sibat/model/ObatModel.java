@@ -86,11 +86,11 @@ public class ObatModel implements Serializable {
         this.nama = nama;
     }
 
-    public Long getJenis() {
+    public Long getIdJenis() {
         return idJenis;
     }
 
-    public void setJenis(Long idJenis) {
+    public void setIdJenis(Long idJenis) {
         this.idJenis = idJenis;
     }
 

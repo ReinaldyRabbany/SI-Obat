@@ -6,10 +6,7 @@ import apap.tugaspemrograman.sibat.model.ObatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ObatServiceImpl implements ObatService {
@@ -50,7 +47,20 @@ public class ObatServiceImpl implements ObatService {
             sb.append(capital.charAt(index));
         }
 
-        String kode = String.valueOf(obat.getJenis())+strBentuk+"2019"+strYear+sb.toString();
+        String kode = String.valueOf(obat.getIdJenis())+strBentuk+"2019"+strYear+sb.toString();
         return kode;
+    }
+
+    @Override
+    public String convertIdJenisToString(Long idJenis) {
+        if (idJenis == 1) {
+            return "Generik";
+        }
+        return "Paten";
+    }
+
+    @Override
+    public Optional<ObatModel> getObatByNoRegistrasiObat(String noReg) {
+        return obatDb.findByNomorRegistrasi(noReg);
     }
 }

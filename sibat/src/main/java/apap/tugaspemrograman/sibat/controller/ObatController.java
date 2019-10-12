@@ -59,4 +59,16 @@ public class ObatController {
 
         return "tambah-obat";
     }
+
+    @RequestMapping(value = "/obat/view", method = RequestMethod.GET)
+    public String viewDetailObat(@RequestParam(value = "noReg") String nomorRegistrasi, Model model) {
+        ObatModel obat = obatService.getObatByNoRegistrasiObat(nomorRegistrasi).get();
+        String jenis = obatService.convertIdJenisToString(obat.getIdJenis());
+
+        model.addAttribute("page_title", "Detail View Obat");
+        model.addAttribute("jenis", jenis);
+        model.addAttribute("obat", obat);
+
+        return "view-obat";
+    }
 }
