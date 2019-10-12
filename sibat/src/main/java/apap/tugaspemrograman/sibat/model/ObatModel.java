@@ -1,6 +1,7 @@
 package apap.tugaspemrograman.sibat.model;
 
 import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,9 +15,9 @@ import java.util.Date;
 public class ObatModel implements Serializable {
 
     @NotNull
-    @UniqueElements
+    //@UniqueElements
     @Size(max = 255)
-    @Column(name="kode", nullable = false)
+    @Column(name="kode", nullable = false, unique = true)
     private String kode;
 
     @Id
@@ -24,9 +25,9 @@ public class ObatModel implements Serializable {
     private Long idObat;
 
     @NotNull
-    @UniqueElements
+    //@UniqueElements
     @Size(max = 255)
-    @Column(name="nomorRegistrasi", nullable = false)
+    @Column(name="nomorRegistrasi", nullable = false, unique = true)
     private String nomorRegistrasi;
 
     @NotNull
@@ -45,6 +46,8 @@ public class ObatModel implements Serializable {
 
     @NotNull
     @Column(name="tanggalTerbit", nullable = false)
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+//    @Temporal(TemporalType.DATE)
     private Date tanggalTerbit;
 
     @NotNull

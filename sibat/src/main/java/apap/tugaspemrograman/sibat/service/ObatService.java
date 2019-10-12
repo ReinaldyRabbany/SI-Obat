@@ -6,4 +6,5 @@ import java.util.List;
 public interface ObatService {
     void addObat(ObatModel obat);
     List<ObatModel> getListObat();
+    String generateKode(ObatModel obat);
 }
