@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelaf.org">
+
+<head>
+    <title> Tambah Obat </title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <h3>Tambah Obat</h3>
+    <form th:action="@{/obat/tambah}" th:object="${obat}" method="POST">
+        Nama: <input type="text" name="nama" maxlength="255" autofocus required/>
+        <br>
+        Nomor Registrasi: <input type="text" name="nomorRegistrasi" maxlength="255" required/>
+        <br>
+        Tanggal Terbit: <input type="date" name="tanggalTerbit" required/>
+        <br>
+        Harga: <input type="number" name="harga" maxlength="20" required/>
+        <br>
+        Bentuk: <input type="text" name="bentuk" required multiple/>
+        <br>
+        jenis: <input type="number" name="jenis" required multiple/>
+        <br>
+        Supplier: <input type="String" name="supplier" required multiple/>
+        <br>
+        <button type="button">Tambah Supplier</button>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+<!--<select id="provinsi" name="provinsi">-->
+<!--    <option disabled="disabled" selected="selected">&#45;&#45;-->
+<!--        Pilih Provinsi &#45;&#45;</option>-->
+<!--    <option th:each="provinsi : ${listProvinsi}"-->
+<!--            th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>-->
+<!--</select>-->
