@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>View Restoran</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="container-fluid">
+        <h2>Detail Data Gudang</h2><br>
+        <p th:text="'  Nama                     : ' + ${gudang.nama}"></p>
+        <p th:text="'  Alamat                   : ' + ${gudang.alamat}"></p>
+        <p th:text="'  Jumlah Obat              : ' + ${list_obat_size}"></p>
+        <br>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>Harga</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="obat, iterationStatus : ${list_obat}"
+            th:style="${iterationStatus.even} ? 'color: blue'">
+            <td th:text="${iterationStatus.count}"></td>
+            <td th:text="${obat.kode}"></td>
+            <td th:text="${obat.nama}"></td>
+            <td th:text="${obat.harga}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
+</body>
+</html>

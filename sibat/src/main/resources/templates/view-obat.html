@@ -6,20 +6,20 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
-<div class="container-fluid">
-    <h2>Detail Data Obat</h2><br>
-    <h3 th:text="'  Kode                   : ' + ${obat.kode}"></h3>
-    <h3 th:text="'  Nama                   : ' + ${obat.nama}"></h3>
-    <h3 th:text="'  Nomor Registrasi       : ' + ${obat.nomorRegistrasi}"></h3>
-    <h3 th:text="'  Bentuk                 : ' + ${obat.bentuk}"></h3>
-    <h3 th:text="'  Tanggal Terbit         : ' + ${obat.tanggalTerbit}"></h3>
-    <h3 th:text="'  Harga                  : ' + ${obat.harga}"></h3>
-    <h3 th:text="'  Jenis Obat             : ' + ${jenis}"></h3>
-    <h3 th:text="'  Gudang Tempat Disimpan : ' + kosong"></h3>
-    <h3 th:text="'  Harga Beli Total       : ' + ${obat.harga}"></h3>
-    <br>
-    <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
-
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="container-fluid">
+        <h2>Detail Data Obat</h2><br>
+        <h3 th:text="'  Kode                   : ' + ${obat.kode}"></h3>
+        <h3 th:text="'  Nama                   : ' + ${obat.nama}"></h3>
+        <h3 th:text="'  Nomor Registrasi       : ' + ${obat.nomorRegistrasi}"></h3>
+        <h3 th:text="'  Bentuk                 : ' + ${obat.bentuk}"></h3>
+        <h3 th:text="'  Tanggal Terbit         : ' + ${obat.tanggalTerbit}"></h3>
+        <h3 th:text="'  Harga                  : ' + ${obat.harga}"></h3>
+        <h3 th:text="'  Jenis Obat             : ' + ${jenis}"></h3>
+        <h3 th:text="'  Gudang Tempat Disimpan : ' + kosong"></h3>
+        <h3 th:text="'  Harga Beli Total       : ' + ${obat.harga}"></h3>
+        <br>
+        <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
+    </div>
 </body>
 </html>
