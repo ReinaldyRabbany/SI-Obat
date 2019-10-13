@@ -33,7 +33,7 @@ public class GudangController {
     }
 
     @RequestMapping(value = "/gudang/view", method = RequestMethod.GET)
-    public String viewDetailObat(@RequestParam(value = "idGudang") Long idGudang, Model model) {
+    public String viewDetailGudang(@RequestParam(value = "idGudang") Long idGudang, Model model) {
         GudangModel gudang = gudangService.getGudangById(idGudang).get();
 
         model.addAttribute("page_title", "Detail View Gudang");
@@ -42,5 +42,43 @@ public class GudangController {
         model.addAttribute("list_obat_size", gudang.getObatList().size());
 
         return "view-gudang";
+    }
+
+    @RequestMapping(value = "/gudang/tambah", method = RequestMethod.GET)
+    public String tambahGudangFormPage(Model model) {
+        GudangModel newGudang = new GudangModel();
+
+        model.addAttribute("gudang", newGudang);
+        model.addAttribute("page_title", "Tambah Gudang");
+
+        return "form-tambah-gudang";
+    }
+
+    @RequestMapping(value = "/gudang/tambah", method = RequestMethod.POST)
+    public String tambahGudangSubmit(@ModelAttribute GudangModel gudang, Model model) {
+
+        gudangService.addGudang(gudang);
+
+        model.addAttribute("namaGudang", gudang.getNama());
+        model.addAttribute("idGudang", gudang.getId());
+        model.addAttribute("page_title", "Tambah Gudang");
+
+        return "tambah-gudang";
+    }
+
+    @RequestMapping(value = "/gudang/hapus/{idGudang}")
+    public String hapusGudangSubmit(@PathVariable Long idGudang, Model model) {
+
+        GudangModel gudang = gudangService.getGudangById(idGudang).get();
+
+        model.addAttribute("namaGudang", gudang.getNama());
+        model.addAttribute("idGudang", gudang.getId());
+        model.addAttribute("page_title", "Hapus Gudang");
+
+        if (gudang.getObatList().size() > 0) {
+            return "tolak-hapus-gudang";
+        }
+        gudangService.hapusGudang(gudang);
+        return "hapus-gudang";
     }
 }

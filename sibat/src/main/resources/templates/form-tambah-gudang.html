@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelaf.org">
+
+<head>
+    <title> Tambah Obat </title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <h3>Tambah Gudang</h3>
+    <form th:action="@{/gudang/tambah}" th:object="${gudang}" method="POST">
+        Nama: <input type="text" name="nama" maxlength="255" autofocus required/>
+        <br>
+        Alamat: <input type="text" name="alamat" maxlength="255" required/>
+        <br>
+<!--        Stok Obat: <input type="number" name="stokObat" maxlength="20" required/>-->
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

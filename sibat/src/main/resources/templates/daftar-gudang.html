@@ -25,11 +25,15 @@
             <td>
                 <a th:href="@{/gudang/view?idGudang={idGudang}(idGudang=${gudang.id})}"><button type="button" class="btn btn-sm">Lihat</button></a>
                 <a><button type="button" class="btn btn-sm">Ubah</button></a>
-                <a><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
+                <a th:href="@{/gudang/hapus/{idGudang}(idGudang=${gudang.id})}"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
             </td>
         </tr>
         </tbody>
     </table>
+    <form th:action="@{/gudang/tambah}">
+        <button class="btn btn-primary btn-sm">Tambah Gudang</button>
+    </form>
+
     <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
 </body>
 </html>

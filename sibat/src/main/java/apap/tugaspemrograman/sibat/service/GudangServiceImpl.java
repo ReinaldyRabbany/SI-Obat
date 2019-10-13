@@ -19,7 +19,7 @@ public class GudangServiceImpl implements GudangService {
     private ObatService obatService;
 
     @Override
-    public void addObat(GudangModel gudang) {
+    public void addGudang(GudangModel gudang) {
         gudangDb.save(gudang);
     }
 
@@ -31,5 +31,10 @@ public class GudangServiceImpl implements GudangService {
     @Override
     public Optional<GudangModel> getGudangById(Long id) {
         return gudangDb.findById(id);
+    }
+
+    @Override
+    public void hapusGudang(GudangModel gudang) {
+        gudangDb.delete(gudang);
     }
 }

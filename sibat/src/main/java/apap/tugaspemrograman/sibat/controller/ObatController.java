@@ -44,7 +44,6 @@ public class ObatController {
     @RequestMapping(value = "/obat/tambah", method = RequestMethod.POST)
     public String tambahObatSubmit(@ModelAttribute ObatModel obat, Model model) {
         String kodeObat = obatService.generateKode(obat);
-        System.out.println(kodeObat);
         obat.setKode(kodeObat);
 
         obatService.addObat(obat);

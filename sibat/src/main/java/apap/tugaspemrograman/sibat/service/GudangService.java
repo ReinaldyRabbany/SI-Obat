@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GudangService {
-    void addObat(GudangModel gudang);
+    void addGudang(GudangModel gudang);
     List<GudangModel> getListGudang();
     Optional<GudangModel> getGudangById(Long id);
-
+    void hapusGudang(GudangModel gudang);
 }
