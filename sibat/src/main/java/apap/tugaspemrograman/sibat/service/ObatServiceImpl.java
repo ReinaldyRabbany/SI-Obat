@@ -60,7 +60,27 @@ public class ObatServiceImpl implements ObatService {
     }
 
     @Override
+    public ObatModel ubahObat(ObatModel obat) {
+        ObatModel targetObat = obatDb.findById(obat.getIdObat()).get();
+        try {
+            targetObat.setNama(obat.getNama());
+            targetObat.setTanggalTerbit(obat.getTanggalTerbit());
+            targetObat.setHarga(obat.getHarga());
+            targetObat.setBentuk(obat.getBentuk());
+            obatDb.save(targetObat);
+            return targetObat;
+        } catch (NullPointerException nullException) {
+            return null;
+        }
+    }
+
+    @Override
     public Optional<ObatModel> getObatByNoRegistrasiObat(String noReg) {
         return obatDb.findByNomorRegistrasi(noReg);
+    }
+
+    @Override
+    public Optional<ObatModel> getObatByIdObat(Long idObat) {
+        return obatDb.findByIdObat(idObat);
     }
 }
