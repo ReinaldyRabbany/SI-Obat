@@ -10,5 +10,7 @@ public interface ObatService {
     List<ObatModel> getListObat();
     String generateKode(ObatModel obat);
     Optional<ObatModel> getObatByNoRegistrasiObat(String noReg);
+    Optional<ObatModel> getObatByIdObat(Long idObat);
     String convertIdJenisToString(Long idJenis);
+    ObatModel ubahObat(ObatModel obat);
 }

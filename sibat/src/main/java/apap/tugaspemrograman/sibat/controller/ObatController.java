@@ -36,7 +36,7 @@ public class ObatController {
     }
 
     @RequestMapping(value = "/obat/tambah", method = RequestMethod.GET)
-    public String addObatFormPage(Model model) {
+    public String tambahObatFormPage(Model model) {
         ObatModel newObat = new ObatModel();
 
         model.addAttribute("namaObat", newObat);
@@ -46,7 +46,7 @@ public class ObatController {
     }
 
     @RequestMapping(value = "/obat/tambah", method = RequestMethod.POST)
-    public String addRestoranSubmit(@ModelAttribute ObatModel obat, Model model) {
+    public String tambahObatSubmit(@ModelAttribute ObatModel obat, Model model) {
         String kodeObat = obatService.generateKode(obat);
         System.out.println(kodeObat);
         obat.setKode(kodeObat);
@@ -55,7 +55,7 @@ public class ObatController {
 
         model.addAttribute("namaObat", obat.getNama());
         model.addAttribute("kodeObat", obat.getKode());
-        model.addAttribute("page_title", "Add Restoran");
+        model.addAttribute("page_title", "Tambah Obat");
 
         return "tambah-obat";
     }
@@ -70,5 +70,45 @@ public class ObatController {
         model.addAttribute("obat", obat);
 
         return "view-obat";
+    }
+
+    @RequestMapping(value = "/obat/ubah", method = RequestMethod.GET)
+    public String ubahObatFormPage(@RequestParam(value = "id") Long idObat, Model model) {
+
+        try {
+            ObatModel obat = obatService.getObatByIdObat(idObat).get();
+        } catch (NoSuchElementException e) {
+            return "home";
+        }
+
+        ObatModel existingObat = obatService.getObatByIdObat(idObat).get();
+
+        model.addAttribute("obat", existingObat);
+        model.addAttribute("page_title", "Ubah Obat");
+
+        return "form-ubah-obat";
+    }
+
+    @RequestMapping(value = "/obat/ubah", method = RequestMethod.POST)
+    public String ubahObatSubmit(@RequestParam(value = "id") Long idObat, @ModelAttribute ObatModel obat, Model model) {
+//        try {
+//            ObatModel obat2 = obatService.getObatByIdObat(obat.getIdObat()).get();
+//        } catch (NoSuchElementException e) {
+//            return "home";
+//        }
+
+        ObatModel newObat = obatService.ubahObat(obat);
+
+        String kodeObat = obatService.generateKode(newObat);
+        newObat.setKode(kodeObat);
+        obat.setKode(kodeObat);
+
+        System.out.println(kodeObat);
+
+        model.addAttribute("namaObat", obat.getNama());
+        model.addAttribute("kodeObat", obat.getKode());
+        model.addAttribute("page_title", "Ubah Obat");
+
+        return "ubah-obat";
     }
 }
