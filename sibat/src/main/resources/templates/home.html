@@ -26,9 +26,9 @@
                 <td th:text="${obat.nama}"></td>
                 <td th:text="${obat.harga}"></td>
                 <td>
-                    <a th:href="@{/obat/view?noReg={noReg}(noReg=${obat.nomorRegistrasi})}"><button type="submit" class="btn btn-sm">Lihat</button></a>
-                    <a th:href="@{/obat/ubah?id={id}(id=${obat.idObat})}"><button type="button" href="#" class="btn btn-sm">Ubah</button></a>
-                    <a><button type="button" href="#" class="btn btn-danger btn-sm">Hapus</button><a/>
+                    <a th:href="@{/obat/view?noReg={noReg}(noReg=${obat.nomorRegistrasi})}"><button type="button" class="btn btn-sm">Lihat</button></a>
+                    <a th:href="@{/obat/ubah?id={id}(id=${obat.idObat})}"><button type="button" class="btn btn-sm">Ubah</button></a>
+                    <a><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
                 </td>
             </tr>
         </tbody>
@@ -38,5 +38,13 @@
     <form th:action="@{/obat/tambah}">
         <button class="btn btn-primary btn-sm">Tambah Obat</button>
     </form>
+
+    <a th:href="@{/gudang}"><button type="submit" class="btn btn-sm">Lihat Daftar Gudang</button></a>
+    <a th:href="@{/obat/filter}"><button type="submit" class="btn btn-sm">Filter Obat</button></a>
+
 </body>
 </html>
+
+<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>-->
+
+<!--<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>-->

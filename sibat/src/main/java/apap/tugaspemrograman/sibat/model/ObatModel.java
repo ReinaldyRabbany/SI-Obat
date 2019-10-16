@@ -1,6 +1,8 @@
 package apap.tugaspemrograman.sibat.model;
 
-import org.hibernate.validator.constraints.UniqueElements;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,24 +10,25 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="obat")
 public class ObatModel implements Serializable {
 
     @NotNull
-    //@UniqueElements
     @Size(max = 255)
     @Column(name="kode", nullable = false, unique = true)
     private String kode;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idObat;
+    private Long id;
 
     @NotNull
-    //@UniqueElements
     @Size(max = 255)
     @Column(name="nomorRegistrasi", nullable = false, unique = true)
     private String nomorRegistrasi;
@@ -35,9 +38,11 @@ public class ObatModel implements Serializable {
     @Column(name="nama", nullable = false)
     private String nama;
 
-    @NotNull
-    @Column(name="idJenis", nullable = false)
-    private Long idJenis;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idJenis", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private JenisModel jenis;
 
     @NotNull
     @Size(max = 255)
@@ -47,12 +52,47 @@ public class ObatModel implements Serializable {
     @NotNull
     @Column(name="tanggalTerbit", nullable = false)
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-//    @Temporal(TemporalType.DATE)
     private Date tanggalTerbit;
 
     @NotNull
     @Column(name="harga", nullable = false)
     private Double harga;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "gudang_obat",
+            joinColumns = { @JoinColumn(name = "idObat") },
+            inverseJoinColumns = { @JoinColumn(name = "idGudang") })
+    private List<GudangModel> gudangList;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "obat_supplier",
+            joinColumns = { @JoinColumn(name = "idObat") },
+            inverseJoinColumns = { @JoinColumn(name = "idSupplier") })
+    private List<SupplierModel> supplierList;
+
+    public List<SupplierModel> getSupplierList() {
+        return supplierList;
+    }
+
+    public void setSupplierList(List<SupplierModel> supplierList) {
+        this.supplierList = supplierList;
+    }
+
+    public List<GudangModel> getGudangList() {
+        return gudangList;
+    }
+
+    public void setGudangList(List<GudangModel> gudangList) {
+        this.gudangList = gudangList;
+    }
 
     public String getKode() {
         return kode;
@@ -63,11 +103,11 @@ public class ObatModel implements Serializable {
     }
 
     public Long getIdObat() {
-        return idObat;
+        return id;
     }
 
-    public void setIdObat(Long idObat) {
-        this.idObat = idObat;
+    public void setIdObat(Long id) {
+        this.id = id;
     }
 
     public String getNomorRegistrasi() {
@@ -86,12 +126,12 @@ public class ObatModel implements Serializable {
         this.nama = nama;
     }
 
-    public Long getIdJenis() {
-        return idJenis;
+    public JenisModel getJenis() {
+        return jenis;
     }
 
-    public void setIdJenis(Long idJenis) {
-        this.idJenis = idJenis;
+    public void setJenis(JenisModel jenis) {
+        this.jenis = jenis;
     }
 
     public String getBentuk() {

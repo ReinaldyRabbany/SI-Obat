@@ -1,18 +1,20 @@
 package apap.tugaspemrograman.sibat.controller;
 
+import apap.tugaspemrograman.sibat.model.GudangModel;
+import apap.tugaspemrograman.sibat.model.JenisModel;
 import apap.tugaspemrograman.sibat.model.ObatModel;
+import apap.tugaspemrograman.sibat.model.SupplierModel;
+import apap.tugaspemrograman.sibat.service.GudangService;
+import apap.tugaspemrograman.sibat.service.JenisService;
 import apap.tugaspemrograman.sibat.service.ObatService;
+import apap.tugaspemrograman.sibat.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,6 +26,15 @@ public class ObatController {
     //@Qualifier("ObatServiceImpl")
     @Autowired
     private ObatService obatService;
+
+    @Autowired
+    private SupplierService supplierService;
+
+    @Autowired
+    private JenisService jenisService;
+
+    @Autowired
+    private GudangService gudangService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -38,17 +49,19 @@ public class ObatController {
     @RequestMapping(value = "/obat/tambah", method = RequestMethod.GET)
     public String tambahObatFormPage(Model model) {
         ObatModel newObat = new ObatModel();
+        List<SupplierModel> supplierList = supplierService.findAllSupplier();
 
         model.addAttribute("namaObat", newObat);
         model.addAttribute("page_title", "Tambah Obat");
+        model.addAttribute("listAllSupplier", supplierList);
 
         return "form-tambah-obat";
     }
 
     @RequestMapping(value = "/obat/tambah", method = RequestMethod.POST)
     public String tambahObatSubmit(@ModelAttribute ObatModel obat, Model model) {
+        //JenisModel jenis = jenisService.getJenisById(obat)
         String kodeObat = obatService.generateKode(obat);
-        System.out.println(kodeObat);
         obat.setKode(kodeObat);
 
         obatService.addObat(obat);
@@ -63,11 +76,23 @@ public class ObatController {
     @RequestMapping(value = "/obat/view", method = RequestMethod.GET)
     public String viewDetailObat(@RequestParam(value = "noReg") String nomorRegistrasi, Model model) {
         ObatModel obat = obatService.getObatByNoRegistrasiObat(nomorRegistrasi).get();
-        String jenis = obatService.convertIdJenisToString(obat.getIdJenis());
+        String jenis = obatService.convertIdJenisToString(obat.getJenis().getId());
+        List<GudangModel> gudangList = obat.getGudangList();
+        String gudang = "";
+        for (int i = 0; i < gudangList.size(); i++) {
+            if (gudangList.size()==0){
+                break;
+            }
+            if (i>=1||(i==gudangList.size()-1&&gudangList.size()>1)) {
+                gudang += ", ";
+            }
+            gudang = gudang + gudangList.get(i).getNama();
+        }
 
         model.addAttribute("page_title", "Detail View Obat");
         model.addAttribute("jenis", jenis);
         model.addAttribute("obat", obat);
+        model.addAttribute("gudang", gudang);
 
         return "view-obat";
     }
@@ -91,11 +116,6 @@ public class ObatController {
 
     @RequestMapping(value = "/obat/ubah", method = RequestMethod.POST)
     public String ubahObatSubmit(@RequestParam(value = "id") Long idObat, @ModelAttribute ObatModel obat, Model model) {
-//        try {
-//            ObatModel obat2 = obatService.getObatByIdObat(obat.getIdObat()).get();
-//        } catch (NoSuchElementException e) {
-//            return "home";
-//        }
 
         ObatModel newObat = obatService.ubahObat(obat);
 
@@ -110,5 +130,32 @@ public class ObatController {
         model.addAttribute("page_title", "Ubah Obat");
 
         return "ubah-obat";
+    }
+
+    @RequestMapping(value = "/obat/filter", method = RequestMethod.GET)
+    public String filterObatView(Model model) {
+
+        List<SupplierModel> listSupplier = supplierService.findAllSupplier();
+        List<JenisModel> listJenis = jenisService.findAllJenis();
+        List<GudangModel> listGudang = gudangService.getListGudang();
+
+        model.addAttribute("listAllSupplier", listSupplier);
+        model.addAttribute("listAllJenis", listJenis);
+        model.addAttribute("listAllGudang", listGudang);
+
+        return "filter-obat-view";
+    }
+
+    @RequestMapping(value = "/obat/filter")
+    public String filterObat(@RequestParam(value = "idGudang", required=false, defaultValue="") Long idGudang,
+                             @RequestParam(value = "idSupplier", required=false, defaultValue="") Long idSupplier,
+                             @RequestParam(value = "idJenis", required=false, defaultValue="") Long idJenis,
+                             Model model) {
+
+        SupplierModel supplier = supplierService.getSupplerById(idSupplier).get();
+        JenisModel jenis = jenisService.getJenisById(idJenis).get();
+        GudangModel gudang = gudangService.getGudangById(idGudang).get();
+
+        return "home";
     }
 }

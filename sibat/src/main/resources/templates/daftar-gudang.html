@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>View Restoran</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="gudang, iterationStatus : ${list_gudang}"
+            th:style="${iterationStatus.even} ? 'color: blue'">
+            <td th:text="${iterationStatus.count}"></td>
+            <td th:text="${gudang.nama}"></td>
+            <td th:text="${gudang.alamat}"></td>
+            <td>
+                <a th:href="@{/gudang/view?idGudang={idGudang}(idGudang=${gudang.id})}"><button type="button" class="btn btn-sm">Lihat</button></a>
+                <a><button type="button" class="btn btn-sm">Ubah</button></a>
+                <a th:href="@{/gudang/hapus/{idGudang}(idGudang=${gudang.id})}"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/gudang/tambah}">
+        <button class="btn btn-primary btn-sm">Tambah Gudang</button>
+    </form>
+
+    <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
+</body>
+</html>

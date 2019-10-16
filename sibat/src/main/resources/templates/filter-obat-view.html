@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelaf.org">
+
+<head>
+    <title> Tambah Obat </title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<h3>Filter Obat</h3>
+<form th:action="@{/obat/filter}" method="POST">
+    Gudang: <select id="gudang" name="gudang">
+                <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
+                <div th:each="thisGudang : ${listAllGudang}">
+                    <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
+                </div>
+            </select>
+    <br>
+    Jenis: <select id="jenis" name="jenis">
+            <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
+            <option  th:value="1" th:text="Generik"></option>
+            <option  th:value="2" th:text="Paten"></option>
+        </select>
+    <br>
+    Supplier: <select id="supplier" name="supplier">
+                <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
+                <div th:each="thisSupplier : ${listAllSupplier}">
+                    <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}"></option>
+                </div>
+            </select>
+    <br>
+    <button type="submit" class="btn btn-primary">Cari</button>
+</form>
+
+<br>
+<!--<table id="obat" class="display">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Kode</th>-->
+<!--        <th>Nama</th>-->
+<!--        <th>Harga</th>-->
+<!--        <th>Gudang</th>-->
+<!--        <th>Jenis</th>-->
+<!--        <th>Supplier</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--    </tr>-->
+<!--    <tr th:each="obat : ${listObatFinal}">-->
+<!--        <td th:text="${obat.kode}" ></td>-->
+<!--        <td th:text="${obat.nama}"></td>-->
+<!--        <td th:text="${obat.harga}"></td>-->
+<!--        <td th:text="${obat.gudang}"></td>-->
+<!--        <td th:text="${obat.jenis}"></td>-->
+<!--        <td th:text="${obat.supplier.nama}"></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+</div>
+</body>
+
+<script>
+		$(document).ready(function() {
+			$('#obat').DataTable();
+		});
+		$('#provinsi')
+				.change(
+						function() {
+							$
+									.getJSON(
+											"http://localhost:8080/provinsi-get",
+											{
+												provinsiId : $(this).val(),
+												ajax : 'true'
+											},
+											function(data) {
+												var html = '<option disabled="disabled" selected="selected">-- Pilih Instansi --</option>';
+												var len = data.length;
+												for (var i = 0; i < len; i++) {
+													html += '<option value= "'+ data[i].id +'" + th:text="'+ data[i].nama +'">'
+															+ data[i].nama
+															+ '</option>';
+												}
+												$('#instansi').html(html);
+											});
+						});
+		$('#instansi').change(function() {
+			$.getJSON("http://localhost:8080/get/instansi-get", {
+				instansiId : $(this).val(),
+				ajax : 'true'
+			}, function(data) {
+				this.value = data;
+			});
+		});
+	</script>
+</html>
