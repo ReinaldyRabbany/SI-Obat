@@ -1,5 +1,8 @@
 package apap.tugaspemrograman.sibat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -7,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -33,9 +38,11 @@ public class ObatModel implements Serializable {
     @Column(name="nama", nullable = false)
     private String nama;
 
-    @NotNull
-    @Column(name="idJenis", nullable = false)
-    private Long idJenis;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idJenis", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private JenisModel jenis;
 
     @NotNull
     @Size(max = 255)
@@ -60,6 +67,24 @@ public class ObatModel implements Serializable {
             joinColumns = { @JoinColumn(name = "idObat") },
             inverseJoinColumns = { @JoinColumn(name = "idGudang") })
     private List<GudangModel> gudangList;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "obat_supplier",
+            joinColumns = { @JoinColumn(name = "idObat") },
+            inverseJoinColumns = { @JoinColumn(name = "idSupplier") })
+    private List<SupplierModel> supplierList;
+
+    public List<SupplierModel> getSupplierList() {
+        return supplierList;
+    }
+
+    public void setSupplierList(List<SupplierModel> supplierList) {
+        this.supplierList = supplierList;
+    }
 
     public List<GudangModel> getGudangList() {
         return gudangList;
@@ -101,12 +126,12 @@ public class ObatModel implements Serializable {
         this.nama = nama;
     }
 
-    public Long getIdJenis() {
-        return idJenis;
+    public JenisModel getJenis() {
+        return jenis;
     }
 
-    public void setIdJenis(Long idJenis) {
-        this.idJenis = idJenis;
+    public void setJenis(JenisModel jenis) {
+        this.jenis = jenis;
     }
 
     public String getBentuk() {

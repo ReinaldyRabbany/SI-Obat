@@ -11,16 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class GudangController {
 
     @Autowired
     private GudangService gudangService;
+
+    @Autowired
+    private ObatService obatService;
 
     @RequestMapping("/gudang")
     public String gudangList(Model model) {
@@ -35,13 +35,36 @@ public class GudangController {
     @RequestMapping(value = "/gudang/view", method = RequestMethod.GET)
     public String viewDetailGudang(@RequestParam(value = "idGudang") Long idGudang, Model model) {
         GudangModel gudang = gudangService.getGudangById(idGudang).get();
+        ObatModel obat = new ObatModel();
+        List<ObatModel> listObat = new ArrayList<>();
+
+        for (int i = 0; i < obatService.getListObat().size(); i++) {
+            obat = obatService.getListObat().get(i);
+            listObat.add(obat);
+        }
+
+        ObatModel assignedObat = new ObatModel();
 
         model.addAttribute("page_title", "Detail View Gudang");
         model.addAttribute("gudang", gudang);
         model.addAttribute("list_obat", gudang.getObatList());
         model.addAttribute("list_obat_size", gudang.getObatList().size());
+        model.addAttribute("listAllObat", listObat);
+        model.addAttribute("obat", assignedObat);
 
         return "view-gudang";
+    }
+
+    @RequestMapping(value = "/gudang/tambah-obat", method = RequestMethod.POST)
+    public String tambahObatDiGudang(@ModelAttribute ObatModel obat, @ModelAttribute GudangModel gudang, Model model) {
+        System.out.println(obat.getIdObat());
+        ObatModel obatData = obatService.getObatByIdObat(obat.getIdObat()).get();
+
+        model.addAttribute("page_title", "Tambah Obat ke Gudang");
+//        model.addAttribute("gudang", gudangData);
+        model.addAttribute("obat", obatData);;
+
+        return "home";
     }
 
     @RequestMapping(value = "/gudang/tambah", method = RequestMethod.GET)

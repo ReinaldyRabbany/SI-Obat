@@ -29,12 +29,13 @@ public class GudangServiceImpl implements GudangService {
     }
 
     @Override
-    public Optional<GudangModel> getGudangById(Long id) {
-        return gudangDb.findById(id);
-    }
+    public Optional<GudangModel> getGudangById(Long id) { return gudangDb.findById(id); }
 
     @Override
-    public void hapusGudang(GudangModel gudang) {
-        gudangDb.delete(gudang);
+    public void hapusGudang(GudangModel gudang) { gudangDb.delete(gudang); }
+
+    @Override
+    public void addObat(ObatModel obat) {
+        return;
     }
 }

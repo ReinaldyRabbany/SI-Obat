@@ -12,6 +12,17 @@
         <p th:text="'  Nama                     : ' + ${gudang.nama}"></p>
         <p th:text="'  Alamat                   : ' + ${gudang.alamat}"></p>
         <p th:text="'  Jumlah Obat              : ' + ${list_obat_size}"></p>
+        <form th:action="@{/gudang/tambah-obat}" th:object="${obat}" method="POST">
+            <input type="hidden" name="idGudang" th:value="${gudang.id}"/>
+            <select id="obat" name="obat">
+                <option disabled="disabled" selected="selected">-- Pilih Obat --</option>
+                <div th:each="thisObat : ${listAllObat}">
+                    <option  th:value="${thisObat.idObat}" th:text="${thisObat.nama}"></option>
+                </div>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+
         <br>
     </div>
     <table class="table table-bordered">

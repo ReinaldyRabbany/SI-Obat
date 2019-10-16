@@ -4,6 +4,7 @@ import apap.tugaspemrograman.sibat.repository.ObatDb;
 import apap.tugaspemrograman.sibat.model.ObatModel;
 import apap.tugaspemrograman.sibat.model.GudangModel;
 import apap.tugaspemrograman.sibat.service.GudangService;
+import apap.tugaspemrograman.sibat.model.JenisModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class ObatServiceImpl implements ObatService {
 
     @Override
     public String generateKode(ObatModel obat) {
+        System.out.println(obat.getBentuk());
+
         String strBentuk = "01";
         if (obat.getBentuk().equals("Kapsul")||obat.getBentuk().equals("kapsul")) {
             strBentuk = "02";
@@ -48,8 +51,8 @@ public class ObatServiceImpl implements ObatService {
             // add Character one by one in end of sb
             sb.append(capital.charAt(index));
         }
-
-        String kode = String.valueOf(obat.getIdJenis())+strBentuk+"2019"+strYear+sb.toString();
+        System.out.println(obat.getJenis());
+        String kode = String.valueOf(obat.getJenis().getId())+strBentuk+"2019"+strYear+sb.toString();
         return kode;
     }
 
@@ -85,4 +88,13 @@ public class ObatServiceImpl implements ObatService {
     public Optional<ObatModel> getObatByIdObat(Long idObat) {
         return obatDb.findById(idObat);
     }
+
+//    public List<ObatModel> getExpiredObat(GudangModel gedung) {
+//        List<ObatModel> listObat = gedung.getObatList();
+//
+//
+//        for (ObatModel obat : listObat) {
+//            if (obat.getTanggalTerbit() > )
+//        }
+//    }
 }
