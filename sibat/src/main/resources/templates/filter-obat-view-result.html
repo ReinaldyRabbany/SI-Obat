@@ -13,24 +13,24 @@
 <h3>Filter Obat</h3>
 <form th:action="@{/obat/filter}">
     Gudang: <select id="gudang" name="idGudang">
-                <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
-                <div th:each="thisGudang : ${listAllGudang}">
-                    <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
-                </div>
-            </select>
+    <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
+    <div th:each="thisGudang : ${listAllGudang}">
+        <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
+    </div>
+</select>
     <br>
     Jenis: <select id="jenis" name="idJenis">
-            <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
-            <option  th:value="1" th:text="Generik"></option>
-            <option  th:value="2" th:text="Paten"></option>
-        </select>
+    <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
+    <option  th:value="1" th:text="Generik"></option>
+    <option  th:value="2" th:text="Paten"></option>
+</select>
     <br>
     Supplier: <select id="supplier" name="idSupplier">
-                <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
-                <div th:each="thisSupplier : ${listAllSupplier}">
-                    <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}"></option>
-                </div>
-            </select>
+    <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
+    <div th:each="thisSupplier : ${listAllSupplier}">
+        <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}"></option>
+    </div>
+</select>
     <br>
     <button type="submit" class="btn btn-primary">Lihat</button>
 </form>
@@ -57,13 +57,13 @@
         <td></td>
         <td></td>
     </tr>
-    <tr th:each="obat : ${listObatFinal}">
+    <tr th:each="obat : ${list_result}">
         <td th:text="${obat.kode}" ></td>
         <td th:text="${obat.nama}"></td>
         <td th:text="${obat.harga}"></td>
-        <td th:text="${obat.gudang}"></td>
-        <td th:text="${obat.jenis}"></td>
-        <td th:text="${obat.supplier.nama}"></td>
+        <td th:text="${gudang}"></td>
+        <td th:text="${jenis}"></td>
+        <td th:text="${supplier}"></td>
     </tr>
     </tbody>
 </table>

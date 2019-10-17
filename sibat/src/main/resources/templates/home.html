@@ -8,7 +8,7 @@
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="obatTable">
         <thead>
             <tr>
                 <th>No</th>
@@ -28,7 +28,7 @@
                 <td>
                     <a th:href="@{/obat/view?noReg={noReg}(noReg=${obat.nomorRegistrasi})}"><button type="button" class="btn btn-sm">Lihat</button></a>
                     <a th:href="@{/obat/ubah?id={id}(id=${obat.idObat})}"><button type="button" class="btn btn-sm">Ubah</button></a>
-                    <a><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
+                    <a th:href="@{/obat/delete?idObat={idObat}(idObat=${obat.idObat})}"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
                 </td>
             </tr>
         </tbody>
@@ -40,11 +40,8 @@
     </form>
 
     <a th:href="@{/gudang}"><button type="submit" class="btn btn-sm">Lihat Daftar Gudang</button></a>
-    <a th:href="@{/obat/filter}"><button type="submit" class="btn btn-sm">Filter Obat</button></a>
+    <a th:href="@{/obat/filters}"><button type="submit" class="btn btn-sm">Filter Obat</button></a>
 
 </body>
 </html>
 
-<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>-->
-
-<!--<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>-->

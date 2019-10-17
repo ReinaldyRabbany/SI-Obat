@@ -38,4 +38,10 @@ public class GudangServiceImpl implements GudangService {
     public void addObat(ObatModel obat) {
         return;
     }
+
+    @Override
+    public void clearObatList(GudangModel gudang) {
+        GudangModel gudangData = gudangDb.findById(gudang.getId()).get();
+        gudangData.getObatList().clear();
+    }
 }

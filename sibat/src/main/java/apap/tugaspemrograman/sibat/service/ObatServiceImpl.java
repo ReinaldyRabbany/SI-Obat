@@ -1,5 +1,6 @@
 package apap.tugaspemrograman.sibat.service;
 
+import apap.tugaspemrograman.sibat.repository.GudangDb;
 import apap.tugaspemrograman.sibat.repository.ObatDb;
 import apap.tugaspemrograman.sibat.model.ObatModel;
 import apap.tugaspemrograman.sibat.model.GudangModel;
@@ -9,12 +10,16 @@ import apap.tugaspemrograman.sibat.model.JenisModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class ObatServiceImpl implements ObatService {
     @Autowired
     private ObatDb obatDb;
+
+    @Autowired
+    private GudangDb gudangDb;
 
     @Override
     public void addObat(ObatModel obat) { obatDb.save(obat); }
@@ -89,12 +94,34 @@ public class ObatServiceImpl implements ObatService {
         return obatDb.findById(idObat);
     }
 
-//    public List<ObatModel> getExpiredObat(GudangModel gedung) {
-//        List<ObatModel> listObat = gedung.getObatList();
-//
-//
-//        for (ObatModel obat : listObat) {
-//            if (obat.getTanggalTerbit() > )
-//        }
-//    }
+    public List<ObatModel> getExpiredObat(GudangModel gudang) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
+        cal.getTimeInMillis();
+        cal.add(Calendar.YEAR, -5);
+
+        List<ObatModel> listObat = gudang.getObatList();
+        List<ObatModel> listResult = new ArrayList<>();
+
+        for (int i = 0; i < listObat.size(); i++) {
+            ObatModel thisObat = listObat.get(i);
+
+            if (thisObat.getTanggalTerbit().before(cal.getTime())) {
+                listResult.add(thisObat);
+            }
+        }
+        return listResult;
+    }
+
+    @Override
+    public void deleteObat(ObatModel obat) {
+        obatDb.delete(obat);
+    }
+
+    @Override
+    public void clearGudangList(ObatModel obat) {
+        ObatModel obatData = obatDb.findById(obat.getIdObat()).get();
+        obatData.getGudangList().clear();
+    }
 }

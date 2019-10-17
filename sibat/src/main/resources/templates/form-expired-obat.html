@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>View Restoran</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="container-fluid">
+        <h2>Lihat Daftar Obat (expired)</h2><br>
+        <form th:action="@{/gudang/expired-obat}">
+            <select id="gudang" name="idGudang">
+                <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
+                <div th:each="thisGudang : ${list_gudang}">
+                    <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
+                </div>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+        <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
+    </div>
+
+<!--    <table class="table table-bordered" id="obat" name="obat">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>No</th>-->
+<!--            <th>Kode</th>-->
+<!--            <th>Nama</th>-->
+<!--            <th>Nomor Registrasi</th>-->
+<!--            <th>Tanggal Terbit</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="obat, iterationStatus : ${list_obat}"-->
+<!--            th:style="${iterationStatus.even} ? 'color: blue'">-->
+<!--            <td th:text="${iterationStatus.count}"></td>-->
+<!--            <td th:text="${obat.kode}"></td>-->
+<!--            <td th:text="${obat.nama}"></td>-->
+<!--            <td th:text="${obat.nomorRegistrasi}"></td>-->
+<!--            <td th:text="${obat.tanggalTerbit}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+</body>
+</html>

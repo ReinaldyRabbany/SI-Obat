@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Homepage</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+<table class="table table-bordered" id="obat" name="obat">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Kode</th>
+        <th>Nama</th>
+        <th>Nomor Registrasi</th>
+        <th>Tanggal Terbit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="obat, iterationStatus : ${list_result}"
+        th:style="${iterationStatus.even} ? 'color: blue'">
+        <td th:text="${iterationStatus.count}"></td>
+        <td th:text="${obat.kode}"></td>
+        <td th:text="${obat.nama}"></td>
+        <td th:text="${obat.nomorRegistrasi}"></td>
+        <td th:text="${obat.tanggalTerbit}"></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+</body>
+</html>

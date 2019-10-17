@@ -15,10 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ObatController {
@@ -49,20 +46,24 @@ public class ObatController {
     @RequestMapping(value = "/obat/tambah", method = RequestMethod.GET)
     public String tambahObatFormPage(Model model) {
         ObatModel newObat = new ObatModel();
+        SupplierModel supplier = new SupplierModel();
         List<SupplierModel> supplierList = supplierService.findAllSupplier();
 
         model.addAttribute("namaObat", newObat);
         model.addAttribute("page_title", "Tambah Obat");
         model.addAttribute("listAllSupplier", supplierList);
+        model.addAttribute("supplier", supplier);
 
         return "form-tambah-obat";
     }
 
     @RequestMapping(value = "/obat/tambah", method = RequestMethod.POST)
-    public String tambahObatSubmit(@ModelAttribute ObatModel obat, Model model) {
-        //JenisModel jenis = jenisService.getJenisById(obat)
+    public String tambahObatSubmit(@ModelAttribute ObatModel obat, @ModelAttribute SupplierModel supplier, Model model) {
         String kodeObat = obatService.generateKode(obat);
         obat.setKode(kodeObat);
+
+        SupplierModel supplierModel = supplierService.getSupplerById(supplier.getId()).get();
+        obat.getSupplierList().add(supplierModel);
 
         obatService.addObat(obat);
 
@@ -132,7 +133,7 @@ public class ObatController {
         return "ubah-obat";
     }
 
-    @RequestMapping(value = "/obat/filter", method = RequestMethod.GET)
+    @RequestMapping(value = "/obat/filters")
     public String filterObatView(Model model) {
 
         List<SupplierModel> listSupplier = supplierService.findAllSupplier();
@@ -152,10 +153,120 @@ public class ObatController {
                              @RequestParam(value = "idJenis", required=false, defaultValue="") Long idJenis,
                              Model model) {
 
-        SupplierModel supplier = supplierService.getSupplerById(idSupplier).get();
-        JenisModel jenis = jenisService.getJenisById(idJenis).get();
-        GudangModel gudang = gudangService.getGudangById(idGudang).get();
+        List<ObatModel> listResult = new ArrayList<>();
 
-        return "home";
+        if (idSupplier!=null&&idGudang!=null&&idJenis!=null) {
+            SupplierModel supplier = supplierService.getSupplerById(idSupplier).get();
+            List<ObatModel> listObatSupplier = supplier.getObatList();
+            model.addAttribute("supplier", supplier.getNama());
+
+            GudangModel gudang = gudangService.getGudangById(idGudang).get();
+            List<ObatModel> listObatGudang = gudang.getObatList();
+            model.addAttribute("nama_gudang", gudang.getNama());
+
+            JenisModel jenis = jenisService.getJenisById(idJenis).get();
+            List<ObatModel> listObatJenis = jenis.getListObat();
+            model.addAttribute("jenis", jenis.getNama());
+
+            listObatSupplier.retainAll(listObatGudang);
+            listObatSupplier.retainAll(listObatJenis);
+            listResult = listObatSupplier;
+        }
+        if (idSupplier==null&&idGudang!=null&&idJenis!=null) {
+            GudangModel gudang = gudangService.getGudangById(idGudang).get();
+            List<ObatModel> listObatGudang = gudang.getObatList();
+            model.addAttribute("gudang", gudang.getNama());
+
+            JenisModel jenis = jenisService.getJenisById(idJenis).get();
+            List<ObatModel> listObatJenis = jenis.getListObat();
+            model.addAttribute("jenis", jenis.getNama());
+
+            model.addAttribute("supplier", "");
+
+            listObatGudang.retainAll(listObatJenis);
+            listResult = listObatGudang;
+        }
+        if (idGudang == null&&idJenis!=null&&idSupplier!=null) {
+            SupplierModel supplier = supplierService.getSupplerById(idSupplier).get();
+            List<ObatModel> listObatSupplier = supplier.getObatList();
+            model.addAttribute("supplier", supplier.getNama());
+
+            JenisModel jenis = jenisService.getJenisById(idJenis).get();
+            List<ObatModel> listObatJenis = jenis.getListObat();
+            model.addAttribute("jenis", jenis.getNama());
+
+            model.addAttribute("gudang", "");
+
+            listObatSupplier.retainAll(listObatJenis);
+            listResult = listObatSupplier;
+        }
+        if (idJenis == null&&idGudang!=null&&idSupplier!=null) {
+            SupplierModel supplier = supplierService.getSupplerById(idSupplier).get();
+            List<ObatModel> listObatSupplier = supplier.getObatList();
+            model.addAttribute("supplier", supplier.getNama());
+
+            GudangModel gudang = gudangService.getGudangById(idGudang).get();
+            List<ObatModel> listObatGudang = gudang.getObatList();
+            model.addAttribute("gudang", gudang.getNama());
+
+            model.addAttribute("jenis", "");
+
+            listObatSupplier.retainAll(listObatGudang);
+            listResult = listObatSupplier;
+        }
+        if (idSupplier != null) {
+            SupplierModel supplier = supplierService.getSupplerById(idSupplier).get();
+            List<ObatModel> listObatSupplier = supplier.getObatList();
+            model.addAttribute("supplier", supplier.getNama());
+
+            model.addAttribute("gudang", "");
+            model.addAttribute("jenis", "");
+
+            listResult = listObatSupplier;
+        }
+        if (idGudang != null) {
+            GudangModel gudang = gudangService.getGudangById(idGudang).get();
+            List<ObatModel> listObatGudang = gudang.getObatList();
+            model.addAttribute("gudang", gudang.getNama());
+
+            model.addAttribute("supplier", "");
+            model.addAttribute("jenis", "");
+
+            listResult = listObatGudang;
+        }
+        if (idJenis != null) {
+            JenisModel jenis = jenisService.getJenisById(idJenis).get();
+            List<ObatModel> listObatJenis = jenis.getListObat();
+            model.addAttribute("jenis", jenis.getNama());
+
+            model.addAttribute("gudang", "");
+
+            model.addAttribute("supplier", "");
+
+            listResult = listObatJenis;
+        }
+
+        model.addAttribute("list_result", listResult);
+
+        List<SupplierModel> listSupplier = supplierService.findAllSupplier();
+        List<JenisModel> listJenis = jenisService.findAllJenis();
+        List<GudangModel> listGudang = gudangService.getListGudang();
+
+        model.addAttribute("listAllSupplier", listSupplier);
+        model.addAttribute("listAllJenis", listJenis);
+        model.addAttribute("listAllGudang", listGudang);
+
+        return "filter-obat-view-result";
+    }
+
+    @RequestMapping(value = "/obat/delete")
+    public String deleteMenu(@RequestParam(value = "idObat") Long id, Model model) {
+        ObatModel obat = obatService.getObatByIdObat(id).get();
+
+        model.addAttribute("obat", obat);
+        model.addAttribute("page_title", "Delete Obat");
+        obatService.deleteObat(obat);
+
+        return "hapus-obat";
     }
 }

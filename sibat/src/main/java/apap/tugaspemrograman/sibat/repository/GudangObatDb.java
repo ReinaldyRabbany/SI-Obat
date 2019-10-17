@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface GudangObatDb extends JpaRepository<GudangObatModel, Long> {
-    Optional<GudangObatModel> findById(Long idGudangObat);
+    //Optional<GudangObatModel> findById(Long idGudangObat);
 }

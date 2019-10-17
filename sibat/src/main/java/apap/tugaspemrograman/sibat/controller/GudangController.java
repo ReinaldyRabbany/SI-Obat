@@ -1,9 +1,12 @@
 package apap.tugaspemrograman.sibat.controller;
 
 import apap.tugaspemrograman.sibat.model.GudangModel;
+import apap.tugaspemrograman.sibat.model.GudangObatModel;
 import apap.tugaspemrograman.sibat.model.ObatModel;
+import apap.tugaspemrograman.sibat.service.GudangObatService;
 import apap.tugaspemrograman.sibat.service.GudangService;
 import apap.tugaspemrograman.sibat.service.ObatService;
+import apap.tugaspemrograman.sibat.repository.ObatDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,12 @@ public class GudangController {
 
     @Autowired
     private ObatService obatService;
+
+    @Autowired
+    private GudangObatService gudangObatService;
+
+    @Autowired
+    private ObatDb obatDb;
 
     @RequestMapping("/gudang")
     public String gudangList(Model model) {
@@ -44,6 +53,7 @@ public class GudangController {
         }
 
         ObatModel assignedObat = new ObatModel();
+        //GudangObatModel gudangObat = new GudangObatModel();
 
         model.addAttribute("page_title", "Detail View Gudang");
         model.addAttribute("gudang", gudang);
@@ -51,20 +61,28 @@ public class GudangController {
         model.addAttribute("list_obat_size", gudang.getObatList().size());
         model.addAttribute("listAllObat", listObat);
         model.addAttribute("obat", assignedObat);
+        //model.addAttribute("gudangObat", gudangObat);
 
         return "view-gudang";
     }
 
     @RequestMapping(value = "/gudang/tambah-obat", method = RequestMethod.POST)
     public String tambahObatDiGudang(@ModelAttribute ObatModel obat, @ModelAttribute GudangModel gudang, Model model) {
-        System.out.println(obat.getIdObat());
         ObatModel obatData = obatService.getObatByIdObat(obat.getIdObat()).get();
+        GudangModel gudangData = gudangService.getGudangById(gudang.getId()).get();
+
+        List<GudangModel> saveGudangList = obatData.getGudangList();
+        List<ObatModel> saveObatList = gudangData.getObatList();
+
+        saveGudangList.add(gudangData);
+        obatData.setGudangList(saveGudangList);
+        obatDb.save(obatData);
 
         model.addAttribute("page_title", "Tambah Obat ke Gudang");
-//        model.addAttribute("gudang", gudangData);
-        model.addAttribute("obat", obatData);;
+        model.addAttribute("obat", obatData);
+        model.addAttribute("gudang", gudangData);
 
-        return "home";
+        return "tambah-obat-gudang";
     }
 
     @RequestMapping(value = "/gudang/tambah", method = RequestMethod.GET)
@@ -103,5 +121,35 @@ public class GudangController {
         }
         gudangService.hapusGudang(gudang);
         return "hapus-gudang";
+    }
+
+    @RequestMapping(value = "/gudang/cari")
+    public String viewExpiredObatinGudang(Model model) {
+        List<GudangModel> gudangList = gudangService.getListGudang();
+        GudangModel gudang = new GudangModel();
+
+        model.addAttribute("list_gudang", gudangList);
+        model.addAttribute("page_title", "Expired Obat di Gudang");
+        model.addAttribute("gudang", gudang);
+
+        return "form-expired-obat";
+    }
+
+    @RequestMapping(value = "/gudang/expired-obat")
+    public String viewExpiredObatinGudangLihat(@RequestParam(value = "idGudang", required=false, defaultValue="") Long idGudang, Model model) {
+        System.out.println(idGudang);
+        GudangModel gudang = gudangService.getGudangById(idGudang).get();
+        System.out.println(gudang.getNama());
+
+        List<ObatModel> listResult = obatService.getExpiredObat(gudang);
+
+        for (ObatModel obat : listResult) {
+            System.out.println(obat.getNama());
+        }
+
+        model.addAttribute("list_result", listResult);
+        model.addAttribute("page_title", "Expired Obat di Gudang");
+
+        return "form-expired-obat-result";
     }
 }

@@ -66,7 +66,7 @@ public class ObatModel implements Serializable {
     @JoinTable(name = "gudang_obat",
             joinColumns = { @JoinColumn(name = "idObat") },
             inverseJoinColumns = { @JoinColumn(name = "idGudang") })
-    private List<GudangModel> gudangList;
+    private List<GudangModel> gudangList = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
