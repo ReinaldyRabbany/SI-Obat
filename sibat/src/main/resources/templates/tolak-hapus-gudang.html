@@ -8,8 +8,11 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <br>
-<h4 class="text-center" th:text="'Gudang ' + ${namaGudang} + ' dengan id ' + ${idGudang} +' tidak bisa dihapus dikarenakan masih memiliki obat.'"></h4>
-<br>
-<h4 class="text-center" th:text="'Kosongkan obat pada gudang ' + ${namaGudang} + ' terlebih dahulu untuk menghapus gudang.'"></h4>>
+<div class="container">
+    <div class="alert alert-danger text-center h5" role="alert" th:text="'Gudang ' + ${namaGudang} + ' dengan id ' + ${idGudang} +' tidak bisa dihapus dikarenakan masih memiliki obat.'">
+        </div>
+    <div class="alert alert-danger text-center h5" role="alert" th:text="'Kosongkan obat pada gudang ' + ${namaGudang} + ' terlebih dahulu untuk menghapus gudang.'">
+        </div>
+</div>
 </body>
 </html>

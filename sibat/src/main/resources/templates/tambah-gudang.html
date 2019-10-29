@@ -8,6 +8,9 @@
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
     <br>
-    <h4 class="text-center" th:text="'Gudang ' + ${namaGudang} + ' dengan id ' + ${idGudang} +' berhasil ditambahkan.'"></h4>
+    <div class="container">
+    <div class="alert alert-success h5 text-center" role="alert" th:text="'Gudang ' + ${namaGudang} + ' dengan id ' + ${idGudang} +' berhasil ditambahkan.'">
+        </div>
+    </div>
 </body>
 </html>

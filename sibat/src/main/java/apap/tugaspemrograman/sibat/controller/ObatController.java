@@ -137,7 +137,7 @@ public class ObatController {
             supplier = supplier + supplierList.get(i).getNama();
         }
 
-        model.addAttribute("page_title", "Detail View Obat");
+        model.addAttribute("page_title", "Detail Obat");
         model.addAttribute("jenis", jenis);
         model.addAttribute("obat", obat);
         model.addAttribute("gudang", gudang);

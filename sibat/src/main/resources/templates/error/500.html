@@ -6,10 +6,10 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
-<div class="container">
-    <br>
-        <h2 class="text-center">500: Internal Server Error</h2>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="container">
+        <br>
+        <div class="alert alert-danger text-center h5" role="alert">500: Internal Server Error</div>
     </div>
 </body>
 </html>

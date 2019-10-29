@@ -9,7 +9,8 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container">
     <br>
-        <h2 class="text-center" th:text="'Obat ' + ${obat.nama} + ' dengan kode ' + ${obat.kode} + ' berhasil dihapus.'"></h2>
+    <div class="alert alert-success text-center h5" role="alert" th:text="'Obat ' + ${obat.nama} + ' dengan kode ' + ${obat.kode} + ' berhasil dihapus.'">
     </div>
+</div>
 </body>
 </html>
