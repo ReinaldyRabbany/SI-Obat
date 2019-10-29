@@ -1,25 +1,18 @@
 package apap.tugaspemrograman.sibat.service;
 
-import apap.tugaspemrograman.sibat.repository.GudangDb;
 import apap.tugaspemrograman.sibat.repository.ObatDb;
 import apap.tugaspemrograman.sibat.model.ObatModel;
 import apap.tugaspemrograman.sibat.model.GudangModel;
-import apap.tugaspemrograman.sibat.service.GudangService;
-import apap.tugaspemrograman.sibat.model.JenisModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class ObatServiceImpl implements ObatService {
     @Autowired
     private ObatDb obatDb;
-
-    @Autowired
-    private GudangDb gudangDb;
 
     @Override
     public void addObat(ObatModel obat) { obatDb.save(obat); }

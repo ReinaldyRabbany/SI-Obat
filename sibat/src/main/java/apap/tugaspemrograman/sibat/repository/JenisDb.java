@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface JenisDb extends JpaRepository<JenisModel, Long> {
     Optional<JenisModel> findById(Long idJenis);
 }

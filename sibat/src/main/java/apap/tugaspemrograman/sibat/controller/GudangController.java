@@ -1,19 +1,14 @@
 package apap.tugaspemrograman.sibat.controller;
 
 import apap.tugaspemrograman.sibat.model.GudangModel;
-import apap.tugaspemrograman.sibat.model.GudangObatModel;
 import apap.tugaspemrograman.sibat.model.ObatModel;
-import apap.tugaspemrograman.sibat.service.GudangObatService;
 import apap.tugaspemrograman.sibat.service.GudangService;
 import apap.tugaspemrograman.sibat.service.ObatService;
 import apap.tugaspemrograman.sibat.repository.ObatDb;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,9 +20,6 @@ public class GudangController {
 
     @Autowired
     private ObatService obatService;
-
-    @Autowired
-    private GudangObatService gudangObatService;
 
     @Autowired
     private ObatDb obatDb;
