@@ -10,69 +10,47 @@
 
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-<h3>Filter Obat</h3>
-<form th:action="@{/obat/filter}">
-    Gudang: <select id="gudang" name="idGudang">
-                <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
-                <div th:each="thisGudang : ${listAllGudang}">
-                    <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
-                </div>
-            </select>
-    <br>
-    Jenis: <select id="jenis" name="idJenis">
-            <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
-            <option  th:value="1" th:text="Generik"></option>
-            <option  th:value="2" th:text="Paten"></option>
-        </select>
-    <br>
-    Supplier: <select id="supplier" name="idSupplier">
-                <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
-                <div th:each="thisSupplier : ${listAllSupplier}">
-                    <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}"></option>
-                </div>
-            </select>
-    <br>
-    <button type="submit" class="btn btn-primary">Lihat</button>
-</form>
-
 <br>
-<table id="obat" class="display">
-    <thead>
-    <tr>
-        <th>Kode</th>
-        <th>Nama</th>
-        <th>Harga</th>
-        <th>Gudang</th>
-        <th>Jenis</th>
-        <th>Supplier</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr th:each="obat : ${listObatFinal}">
-        <td th:text="${obat.kode}" ></td>
-        <td th:text="${obat.nama}"></td>
-        <td th:text="${obat.harga}"></td>
-        <td th:text="${obat.gudang}"></td>
-        <td th:text="${obat.jenis}"></td>
-        <td th:text="${obat.supplier.nama}"></td>
-    </tr>
-    </tbody>
-</table>
-</div>
-</body>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
-<script>
-		$(document).ready(function() {
-			$('#obat').DataTable();
-		});
-	</script>
+<form th:action="@{/obat/filter}">
+    <div class="container">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header text-white bg-dark mb-3 h6">
+                    Filter Obat
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/gudang/expired-obat}">
+                        <div class="form-group row">
+                                <label>Gudang:</label>
+                                <select class="form-control" id="gudang" name="idGudang">
+                                        <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
+                                        <div th:each="thisGudang : ${listAllGudang}">
+                                            <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
+                                        </div>
+                                    </select>
+                        </div>
+                        <div class="form-group row">
+                                <label>Jenis:</label>
+                                <select class="form-control" id="jenis" name="idJenis">
+                                        <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
+                                        <option  th:value="1" th:text="Generik"></option>
+                                        <option  th:value="2" th:text="Paten"></option>
+                                    </select>
+                        </div>
+                        <div class="form-group row">
+                                <label>Jenis:</label>
+                                <select class="form-control" id="supplier" name="idSupplier">
+                                        <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
+                                        <div th:each="thisSupplier : ${listAllSupplier}">
+                                            <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}"></option>
+                                        </div>
+                                    </select>
+                        </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
 </html>

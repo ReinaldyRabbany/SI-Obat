@@ -7,10 +7,9 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
-<h2 th:text="'Gudang ' + ${namaGudang} + ' dengan id ' + ${idGudang} +' tidak bisa dihapus.'"></h2>
-<h2 th:text="'Gudang ' + ${namaGudang} + ' masih memeliki obat.'"></h2>
-<h2 th:text="'Lakukan operasi kosongkan obat pada gudang ' + ${namaGudang} + ' terlebih dahulu'"></h2>
 <br>
-<a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
+<h4 class="text-center" th:text="'Gudang ' + ${namaGudang} + ' dengan id ' + ${idGudang} +' tidak bisa dihapus dikarenakan masih memiliki obat.'"></h4>
+<br>
+<h4 class="text-center" th:text="'Kosongkan obat pada gudang ' + ${namaGudang} + ' terlebih dahulu untuk menghapus gudang.'"></h4>>
 </body>
 </html>

@@ -76,7 +76,7 @@ public class ObatModel implements Serializable {
     @JoinTable(name = "obat_supplier",
             joinColumns = { @JoinColumn(name = "idObat") },
             inverseJoinColumns = { @JoinColumn(name = "idSupplier") })
-    private List<SupplierModel> supplierList;
+    private List<SupplierModel> supplierList = new ArrayList<>();
 
     public List<SupplierModel> getSupplierList() {
         return supplierList;

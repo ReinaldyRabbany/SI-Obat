@@ -9,13 +9,30 @@
 
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
-    <h3>Tambah Gudang</h3>
-    <form th:action="@{/gudang/tambah}" th:object="${gudang}" method="POST">
-        Nama: <input type="text" name="nama" maxlength="255" autofocus required/>
+    <div class="container">
         <br>
-        Alamat: <input type="text" name="alamat" maxlength="255" required/>
+        <h3 class="text-center">Tambah Gudang</h3>
         <br>
-        <button type="submit">Submit</button>
-    </form>
+        <form th:action="@{/gudang/tambah}" th:object="${gudang}" method="POST">
+            <div class="form-group row">
+                <label class="col-form-label col-sm-2">Nama:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="nama" placeholder="Nama Gudang" autofocus required/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-sm-2">Alamat:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="alamat" placeholder="Alamat Gudang" required/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-sm-2"></label>
+                <div class="col-sm-10">
+                    <button class="btn btn-success" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

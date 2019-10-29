@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -72,15 +73,18 @@ public class GudangController {
         GudangModel gudangData = gudangService.getGudangById(gudang.getId()).get();
 
         List<GudangModel> saveGudangList = obatData.getGudangList();
-        List<ObatModel> saveObatList = gudangData.getObatList();
 
         saveGudangList.add(gudangData);
         obatData.setGudangList(saveGudangList);
         obatDb.save(obatData);
 
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'pukul' HH:mm:ss z");
+        Date theDate = new Date(System.currentTimeMillis());
+
         model.addAttribute("page_title", "Tambah Obat ke Gudang");
         model.addAttribute("obat", obatData);
         model.addAttribute("gudang", gudangData);
+        model.addAttribute("date", formatter.format(theDate));
 
         return "tambah-obat-gudang";
     }
@@ -129,7 +133,7 @@ public class GudangController {
         GudangModel gudang = new GudangModel();
 
         model.addAttribute("list_gudang", gudangList);
-        model.addAttribute("page_title", "Expired Obat di Gudang");
+        model.addAttribute("page_title", "Cari");
         model.addAttribute("gudang", gudang);
 
         return "form-expired-obat";
@@ -137,18 +141,30 @@ public class GudangController {
 
     @RequestMapping(value = "/gudang/expired-obat")
     public String viewExpiredObatinGudangLihat(@RequestParam(value = "idGudang", required=false, defaultValue="") Long idGudang, Model model) {
-        System.out.println(idGudang);
+        if(idGudang==null) {
+            List<GudangModel> gudangList = gudangService.getListGudang();
+            GudangModel gudang = new GudangModel();
+
+            model.addAttribute("list_gudang", gudangList);
+            model.addAttribute("page_title", "Cari");
+            model.addAttribute("gudang", gudang);
+
+            return "form-expired-obat";
+        }
+        
         GudangModel gudang = gudangService.getGudangById(idGudang).get();
-        System.out.println(gudang.getNama());
+        List<GudangModel> gudangList = gudangService.getListGudang();
 
         List<ObatModel> listResult = obatService.getExpiredObat(gudang);
 
-        for (ObatModel obat : listResult) {
-            System.out.println(obat.getNama());
-        }
-
         model.addAttribute("list_result", listResult);
-        model.addAttribute("page_title", "Expired Obat di Gudang");
+        model.addAttribute("gudang", gudang);
+        model.addAttribute("list_gudang", gudangList);
+        model.addAttribute("page_title", "Cari");
+
+        if(listResult.size()==0) {
+            return "no-expired-obat";
+        }
 
         return "form-expired-obat-result";
     }

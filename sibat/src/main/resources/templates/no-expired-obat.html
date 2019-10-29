@@ -28,28 +28,8 @@
                 </form>
             </div>
         </div>
+        <br>
+        <div class="alert alert-warning" role="alert" th:text="'Tidak ditemukan obat yang expired di gudang ' + ${gudang.nama}"></div>
     </div>
-
-<!--    <table class="table table-bordered" id="obat" name="obat">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th>No</th>-->
-<!--            <th>Kode</th>-->
-<!--            <th>Nama</th>-->
-<!--            <th>Nomor Registrasi</th>-->
-<!--            <th>Tanggal Terbit</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="obat, iterationStatus : ${list_obat}"-->
-<!--            th:style="${iterationStatus.even} ? 'color: blue'">-->
-<!--            <td th:text="${iterationStatus.count}"></td>-->
-<!--            <td th:text="${obat.kode}"></td>-->
-<!--            <td th:text="${obat.nama}"></td>-->
-<!--            <td th:text="${obat.nomorRegistrasi}"></td>-->
-<!--            <td th:text="${obat.tanggalTerbit}"></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
 </body>
 </html>

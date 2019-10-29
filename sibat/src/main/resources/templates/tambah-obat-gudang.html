@@ -8,6 +8,6 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <h2 th:text="'Obat ' + ${obat.nama} + ' dengan kode ' + ${obat.kode} + ' berhasil ditambahkan ke ' + ${gudang.nama}"></h2>
-<a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
+<h2 th:text="'pada tanggal ' + ${date}"></h2>
 </body>
 </html>

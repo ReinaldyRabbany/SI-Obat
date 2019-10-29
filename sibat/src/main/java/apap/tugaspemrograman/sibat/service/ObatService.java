@@ -18,4 +18,6 @@ public interface ObatService {
     List<ObatModel> getExpiredObat(GudangModel gedung);
     void deleteObat(ObatModel obat);
     void clearGudangList(ObatModel obat);
+    String generateRandomStr();
+    boolean validateKode(String kode);
 }

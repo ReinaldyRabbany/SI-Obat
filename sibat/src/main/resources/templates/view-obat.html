@@ -7,19 +7,71 @@
 </head>
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
-    <div class="container-fluid">
-        <h2>Detail Data Obat</h2><br>
-        <h3 th:text="'  Kode                   : ' + ${obat.kode}"></h3>
-        <h3 th:text="'  Nama                   : ' + ${obat.nama}"></h3>
-        <h3 th:text="'  Nomor Registrasi       : ' + ${obat.nomorRegistrasi}"></h3>
-        <h3 th:text="'  Bentuk                 : ' + ${obat.bentuk}"></h3>
-        <h3 th:text="'  Tanggal Terbit         : ' + ${obat.tanggalTerbit}"></h3>
-        <h3 th:text="'  Harga                  : ' + ${obat.harga}"></h3>
-        <h3 th:text="'  Jenis Obat             : ' + ${jenis}"></h3>
-        <h3 th:text="'  Gudang Tempat Disimpan : ' + ${gudang}"></h3>
-        <h3 th:text="'  Harga Beli Total       : ' + ${obat.harga}"></h3>
+    <br>
+    <div class="container text-center">
+        <div class="card">
+            <div class="card-header text-white bg-dark mb-3">
+                <h4>Detail Data Obat</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped h6">
+                    <thead class="thead-dark">
+                        <tr>
+                                <th></th>
+                                <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>kode</td>
+                            <td th:text="${obat.kode}"></td>
+                        </tr>
+                        <tr>
+                                <td>Nama</td>
+                                <td th:text="${obat.nama}"></td>
+                            </tr>
+                            <tr>
+                                    <td>Nomor Registrasi</td>
+                                    <td th:text="${obat.nomorRegistrasi}"></td>
+                                </tr>
+                                <tr>
+                                        <td>Bentuk</td>
+                                        <td th:text="${obat.bentuk}"></td>
+                                    </tr>
+                                    <tr>
+                                            <td>Tanggal Terbit</td>
+                                            <td th:text="${obat.tanggalTerbit}"></td>
+                                        </tr>
+                                        <tr>
+                                                <td>Harga</td>
+                                                <td th:text="'Rp'+${obat.harga}"></td>
+                                            </tr>
+                                            <tr>
+                                                    <td>Jenis Obat</td>
+                                                    <td th:text="${jenis}"></td>
+                                                </tr>
+                                                <tr>
+                                                        <td>Gudang Tempat Disimpan</td>
+                                                        <td th:text="${gudang}"></td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td>Supplier</td>
+                                                            <td th:text="${supplier}"></td>
+                                                        </tr>
+                    </tbody>
+                </table>
+                <!-- <h5 th:text="'  Kode                   : ' + ${obat.kode}"></h5>
+                <h5 th:text="'  Nama                   : ' + ${obat.nama}"></h5>
+                <h5 th:text="'  Nomor Registrasi       : ' + ${obat.nomorRegistrasi}"></h5>
+                <h5 th:text="'  Bentuk                 : ' + ${obat.bentuk}"></h5>
+                <h5 th:text="'  Tanggal Terbit         : ' + ${obat.tanggalTerbit}"></h5>
+                <h5 th:text="'  Harga                  : ' + ${obat.harga}"></h5>
+                <h5 th:text="'  Jenis Obat             : ' + ${jenis}"></h5>
+                <h5 th:text="'  Gudang Tempat Disimpan : ' + ${gudang}"></h5>
+                <h5 th:text="'  Harga Beli Total       : ' + ${obat.harga}"></h5> -->
+            </div>
+        </div>
         <br>
-        <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
     </div>
 </body>
 </html>
