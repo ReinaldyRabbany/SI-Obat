@@ -39,6 +39,12 @@
                         </div>
                         <div class="form-group row">
                                 <label>Supplier:</label>
+                                        <option  th:value="1" th:text="Generik"></option>
+                                        <option  th:value="2" th:text="Paten"></option>
+                                    </select>
+                        </div>
+                        <div class="form-group row">
+                                <label>Jenis:</label>
                                 <select class="form-control" id="supplier" name="idSupplier">
                                         <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
                                         <div th:each="thisSupplier : ${listAllSupplier}">

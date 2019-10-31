@@ -25,6 +25,7 @@
                                         <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
                                         <div th:each="thisGudang : ${listAllGudang}">
                                             <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}" th:selected="${idGudang==thisGudang.id}"></option>
+                                            <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
                                         </div>
                                     </select>
                         </div>
@@ -43,6 +44,17 @@
                                         <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
                                         <div th:each="thisSupplier : ${listAllSupplier}">
                                             <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}" th:selected="${idSupplier==thisSupplier.id}"></option>
+                                        <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
+                                        <option  th:value="1" th:text="Generik"></option>
+                                        <option  th:value="2" th:text="Paten"></option>
+                                    </select>
+                        </div>
+                        <div class="form-group row">
+                                <label>Jenis:</label>
+                                <select class="form-control" id="supplier" name="idSupplier">
+                                        <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
+                                        <div th:each="thisSupplier : ${listAllSupplier}">
+                                            <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}"></option>
                                         </div>
                                     </select>
                         </div>
