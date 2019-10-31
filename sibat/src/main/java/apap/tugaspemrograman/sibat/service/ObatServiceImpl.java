@@ -26,7 +26,7 @@ public class ObatServiceImpl implements ObatService {
         String strBentuk = "01";
         if (obat.getBentuk().equals("Kapsul")||obat.getBentuk().equals("kapsul")) {
             strBentuk = "02";
-        } else {
+        } else if (obat.getBentuk().equals("Tablet")||obat.getBentuk().equals("tablet")) {
             strBentuk = "03";
         }
 

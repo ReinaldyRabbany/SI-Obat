@@ -32,6 +32,13 @@
                                 <label>Jenis:</label>
                                 <select class="form-control" id="jenis" name="idJenis">
                                         <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
+                                        <div th:each="thisJenis : ${listAllJenis}">
+                                            <option  th:value="${thisJenis.id}" th:text="${thisJenis.nama}"></option>
+                                        </div>
+                                    </select>
+                        </div>
+                        <div class="form-group row">
+                                <label>Supplier:</label>
                                         <option  th:value="1" th:text="Generik"></option>
                                         <option  th:value="2" th:text="Paten"></option>
                                     </select>

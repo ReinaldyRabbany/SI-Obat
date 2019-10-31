@@ -157,6 +157,7 @@ public class GudangController {
         model.addAttribute("gudang", gudang);
         model.addAttribute("list_gudang", gudangList);
         model.addAttribute("page_title", "Cari");
+        model.addAttribute("idGudang", gudang.getId());
 
         if(listResult.size()==0) {
             return "no-expired-obat";

@@ -24,6 +24,7 @@
                                 <select class="form-control" id="gudang" name="idGudang">
                                         <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
                                         <div th:each="thisGudang : ${listAllGudang}">
+                                            <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}" th:selected="${idGudang==thisGudang.id}"></option>
                                             <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
                                         </div>
                                     </select>
@@ -31,6 +32,18 @@
                         <div class="form-group row">
                                 <label>Jenis:</label>
                                 <select class="form-control" id="jenis" name="idJenis">
+                                    <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
+                                    <div th:each="thisJenis : ${listAllJenis}">
+                                        <option  th:value="${thisJenis.id}" th:text="${thisJenis.nama}" th:selected="${idJenis==thisJenis.id}"></option>
+                                    </div>
+                                </select>
+                        </div>
+                        <div class="form-group row">
+                                <label>Supplier:</label>
+                                <select class="form-control" id="supplier" name="idSupplier">
+                                        <option disabled="disabled" selected="selected">-- Pilih Supplier --</option>
+                                        <div th:each="thisSupplier : ${listAllSupplier}">
+                                            <option  th:value="${thisSupplier.id}" th:text="${thisSupplier.nama}" th:selected="${idSupplier==thisSupplier.id}"></option>
                                         <option disabled="disabled" selected="selected">-- Pilih Jenis --</option>
                                         <option  th:value="1" th:text="Generik"></option>
                                         <option  th:value="2" th:text="Paten"></option>

@@ -19,6 +19,7 @@
                                 <select class="form-control" id="gudang" name="idGudang">
                                     <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
                                     <div th:each="thisGudang : ${list_gudang}">
+                                        <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}" th:selected="${idGudang == thisGudang.id}"></option>
                                         <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
                                     </div>
                                 </select>
