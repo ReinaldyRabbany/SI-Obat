@@ -38,9 +38,7 @@ public class GudangController {
 
     @RequestMapping(value = "/gudang/view", method = RequestMethod.GET)
     public String viewDetailGudang(@RequestParam(value = "idGudang") Long idGudang, Model model) {
-        System.out.println(idGudang);
         GudangModel gudang = gudangService.getGudangById(idGudang).get();
-        System.out.println(gudang.getNama());
         ObatModel obat = new ObatModel();
         List<ObatModel> listObat = new ArrayList<>();
 
@@ -157,6 +155,7 @@ public class GudangController {
         model.addAttribute("gudang", gudang);
         model.addAttribute("list_gudang", gudangList);
         model.addAttribute("page_title", "Cari");
+        model.addAttribute("idGudang", gudang.getId());
 
         if(listResult.size()==0) {
             return "no-expired-obat";

@@ -292,6 +292,9 @@ public class ObatController {
         model.addAttribute("listAllSupplier", listSupplier);
         model.addAttribute("listAllJenis", listJenis);
         model.addAttribute("listAllGudang", listGudang);
+        model.addAttribute("idGudang", idGudang);
+        model.addAttribute("idJenis", idJenis);
+        model.addAttribute("idSupplier", idSupplier);
         model.addAttribute("page_title", "Filter");
 
         return "filter-obat-view-result";
