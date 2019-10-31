@@ -30,8 +30,10 @@
             </div>
             <br>
     <div class="card">
+        <div class="card-header text-center text-white bg-dark mb-3 h5">
+            <div th:text="'Daftar Obat Expired di Gudang ' + ${gudang.nama}"></div>
+        </div>
         <div class="card-body">
-            <h5 th:text="'Gudang: ' + ${gudang.nama}"></h5>
                 <table class="table table-striped text-center" id="obat" name="obat">
                         <thead class="thead-dark">
                         <tr>
@@ -43,8 +45,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="obat, iterationStatus : ${list_result}"
-                            th:style="${iterationStatus.even} ? 'color: blue'">
+                        <tr th:each="obat, iterationStatus : ${list_result}">
                             <td th:text="${iterationStatus.count}"></td>
                             <td th:text="${obat.kode}"></td>
                             <td th:text="${obat.nama}"></td>

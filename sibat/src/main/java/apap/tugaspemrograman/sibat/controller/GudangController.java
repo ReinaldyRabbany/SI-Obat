@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -36,25 +38,31 @@ public class GudangController {
 
     @RequestMapping(value = "/gudang/view", method = RequestMethod.GET)
     public String viewDetailGudang(@RequestParam(value = "idGudang") Long idGudang, Model model) {
+        System.out.println(idGudang);
         GudangModel gudang = gudangService.getGudangById(idGudang).get();
+        System.out.println(gudang.getNama());
         ObatModel obat = new ObatModel();
         List<ObatModel> listObat = new ArrayList<>();
 
         for (int i = 0; i < obatService.getListObat().size(); i++) {
             obat = obatService.getListObat().get(i);
+            if (gudang.getObatList().contains(obat)) {
+                continue;
+            }
             listObat.add(obat);
         }
 
         ObatModel assignedObat = new ObatModel();
-        //GudangObatModel gudangObat = new GudangObatModel();
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'pukul' HH:mm:ss z");
+        Date theDate = new Date(System.currentTimeMillis());
 
-        model.addAttribute("page_title", "Detail View Gudang");
+        model.addAttribute("page_title", "Detail Gudang");
         model.addAttribute("gudang", gudang);
         model.addAttribute("list_obat", gudang.getObatList());
         model.addAttribute("list_obat_size", gudang.getObatList().size());
         model.addAttribute("listAllObat", listObat);
         model.addAttribute("obat", assignedObat);
-        //model.addAttribute("gudangObat", gudangObat);
+        model.addAttribute("date", formatter.format(theDate));
 
         return "view-gudang";
     }
@@ -70,15 +78,11 @@ public class GudangController {
         obatData.setGudangList(saveGudangList);
         obatDb.save(obatData);
 
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'pukul' HH:mm:ss z");
-        Date theDate = new Date(System.currentTimeMillis());
+        model.addAttribute("page_title", "Detail Gudang");
+        model.addAttribute("obat", obat);
+        model.addAttribute("gudang", gudang);
 
-        model.addAttribute("page_title", "Tambah Obat ke Gudang");
-        model.addAttribute("obat", obatData);
-        model.addAttribute("gudang", gudangData);
-        model.addAttribute("date", formatter.format(theDate));
-
-        return "tambah-obat-gudang";
+        return "redirect:/gudang/view?idGudang="+gudangData.getId();
     }
 
     @RequestMapping(value = "/gudang/tambah", method = RequestMethod.GET)

@@ -34,7 +34,6 @@
                                         <td th:text="${gudang.alamat}"></td>
                                         <td>
                                             <a th:href="@{/gudang/view?idGudang={idGudang}(idGudang=${gudang.id})}"><button type="button" class="btn btn-info btn-sm">Lihat</button></a>
-                                            <a><button type="button" class="btn btn-dark btn-sm">Ubah</button></a>
                                             <a th:href="@{/gudang/hapus/{idGudang}(idGudang=${gudang.id})}"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
                                         </td>
                                     </tr>
