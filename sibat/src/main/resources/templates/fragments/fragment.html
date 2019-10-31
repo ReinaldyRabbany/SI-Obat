@@ -17,17 +17,34 @@
 </head>
 
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#" th:text="${page_title}?:'Navbar'">Navbar</a>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="Navbar-header">
+            <span class="navbar-brand mb-0 h1" href="#" th:text="${page_title}?:'Navbar'">Navbar</span>
+    </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" th:href="@{/}">Beranda<span class="sr-only">(current)</span></a>
+        </div>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" th:href="@{/gudang}">Gudang</a>
+        </div>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" th:href="@{/gudang/cari}">Cari</a> 
+        </div>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" th:href="@{/obat/filter/}">Filter</a>
+        </div>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" th:href="@{/obat/bonus}">Bonus</a>
         </div>
     </div>
+    <span class="navbar-text text-right">
+        Reinaldy Rabbany | 1706043872 | C
+      </span>
 </nav>
 
 </body>

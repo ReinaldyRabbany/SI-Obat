@@ -10,4 +10,16 @@ import java.util.*;
 
 @Service
 public class GudangObatServiceImpl implements GudangObatService {
+    @Autowired
+    GudangObatDb gudangObatDb;
+
+    @Override
+    public void addGudangObat(GudangObatModel gudangObat) {
+        gudangObatDb.save(gudangObat);
+    }
+
+    @Override
+    public Optional<GudangObatModel> getGudangObatById(Long idGudangObat) {
+        return gudangObatDb.findById(idGudangObat);
+    }
 }

@@ -7,43 +7,66 @@
 </head>
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
-    <div class="container-fluid">
-        <h2>Detail Data Gudang</h2><br>
-        <p th:text="'  Nama                     : ' + ${gudang.nama}"></p>
-        <p th:text="'  Alamat                   : ' + ${gudang.alamat}"></p>
-        <p th:text="'  Jumlah Obat              : ' + ${list_obat_size}"></p>
-        <form th:action="@{/gudang/tambah-obat}" th:object="${obat}" method="POST">
-            <input type="hidden" name="idGudang" th:value="${gudang.id}"/>
-            <select id="obat" name="obat">
-                <option disabled="disabled" selected="selected">-- Pilih Obat --</option>
-                <div th:each="thisObat : ${listAllObat}">
-                    <option  th:value="${thisObat.idObat}" th:text="${thisObat.nama}"></option>
+    <br>
+    <div class="container">
+        <div class="text-center">
+            <div class="card">
+                <div class="card-header text-white bg-dark mb-3 h4">
+                        Detail Data Gudang
                 </div>
-            </select>
-            <button type="submit">Submit</button>
-        </form>
-
+                <div class="card-body">
+                    <h5 th:text="'  Nama                     : ' + ${gudang.nama}"></h5>
+                    <h5 th:text="'  Alamat                   : ' + ${gudang.alamat}"></h5>
+                    <h5 th:text="'  Jumlah Obat              : ' + ${list_obat_size}"></h5>
+                </div>
+                <div class="container">
+                        <div class="card-header text-white bg-dark mb-3" th:text="'Daftar obat di gudang ' + ${gudang.nama}"></div>
+                        <div class="card-body">
+                                <form th:action="@{/gudang/tambah-obat}" th:object="${obat}" method="POST">
+                                    <div th:object="${gudang}"><input name="id" type="hidden" th:value="${gudang.id}"></div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-5">
+                                            <select class="form-control" id="obat" name="idObat">
+                                                <option disabled="disabled" selected="selected">-- Pilih Obat --</option>
+                                                <div th:each="thisObat : ${listAllObat}">
+                                                    <option  th:value="${thisObat.idObat}" th:text="${thisObat.nama}"></option>
+                                                </div>
+                                            </select>               
+                                        </div>
+                                        <button class="btn btn-dark btn-sm" type="submit">Submit</button>
+                                        <div class="col-sm-3">
+                                            <small class="text-center" th:text="' *Tambahkan obat pada gudang ' + ${gudang.nama}"></small>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="container">
+                                        <div class="alert alert-success h6 text-center" role="alert" th:text="'Obat ' + ${obat.nama} + ' dengan kode ' + ${obat.kode} +' berhasil ditambahkan ke ' + ${gudang.nama} + ' pada tanggal dan waktu ' + ${date}">
+                                        </div>
+                                    </div> -->
+                                </form>
+                                <table class="table table-striped text-center">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kode</th>
+                                            <th>Nama</th>
+                                            <th>Harga</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="obat, iterationStatus : ${list_obat}">
+                                            <td th:text="${iterationStatus.count}"></td>
+                                            <td th:text="${obat.kode}"></td>
+                                            <td th:text="${obat.nama}"></td>
+                                            <td th:text="'Rp'+${obat.harga}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                        </div>
+                    </div>
+            </div>  
+        </div>
         <br>
     </div>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Kode</th>
-            <th>Nama</th>
-            <th>Harga</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="obat, iterationStatus : ${list_obat}"
-            th:style="${iterationStatus.even} ? 'color: blue'">
-            <td th:text="${iterationStatus.count}"></td>
-            <td th:text="${obat.kode}"></td>
-            <td th:text="${obat.nama}"></td>
-            <td th:text="${obat.harga}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/}" style="color: blue">Kembali ke Beranda</a>
+    <br>
 </body>
 </html>

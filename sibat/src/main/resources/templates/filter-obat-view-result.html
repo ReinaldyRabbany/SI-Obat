@@ -18,7 +18,7 @@
                     Filter Obat
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/obat/filter}">
+                    <form th:action="@{/gudang/expired-obat}">
                         <div class="form-group row">
                                 <label>Gudang:</label>
                                 <select class="form-control" id="gudang" name="idGudang">
@@ -51,6 +51,46 @@
                 </div>
             </div>
         </div>
-    </form>
-    <br>
+</form>
+<br>
+<div class="container">
+        <div class="card">
+        <div class="card-header text-white bg-dark mb-3 h6">
+            Hasil Filter Obat
+        </div>
+        <div class="card-body">
+                <table id="obat" class="display">
+                        <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Gudang</th>
+                            <th>Jenis</th>
+                            <th>Supplier</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="obat : ${list_result}">
+                            <td th:text="${obat.kode}" ></td>
+                            <td th:text="${obat.nama}"></td>
+                            <td th:text="${obat.harga}"></td>
+                            <td th:text="${gudang_nama}"></td>
+                            <td th:text="${jenis_nama}"></td>
+                            <td th:text="${supplier_nama}"></td>
+                        </tr>
+                        </tbody>
+                    </table>  
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#obat').DataTable();
+	});
+</script>
+</body>
 </html>

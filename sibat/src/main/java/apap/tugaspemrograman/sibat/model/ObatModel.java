@@ -9,9 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +64,7 @@ public class ObatModel implements Serializable {
     @JoinTable(name = "gudang_obat",
             joinColumns = { @JoinColumn(name = "idObat") },
             inverseJoinColumns = { @JoinColumn(name = "idGudang") })
-    private List<GudangModel> gudangList;
+    private List<GudangModel> gudangList = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -76,7 +74,7 @@ public class ObatModel implements Serializable {
     @JoinTable(name = "obat_supplier",
             joinColumns = { @JoinColumn(name = "idObat") },
             inverseJoinColumns = { @JoinColumn(name = "idSupplier") })
-    private List<SupplierModel> supplierList;
+    private List<SupplierModel> supplierList = new ArrayList<>();
 
     public List<SupplierModel> getSupplierList() {
         return supplierList;

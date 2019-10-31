@@ -9,18 +9,43 @@
 
 <body>
     <nav th:replace="fragments/fragment :: navbar"></nav>
-    <h3>Tambah Obat</h3>
-    <form th:action="@{/obat/ubah?id={id}(id=${obat.idObat})}" th:object="${obat}" method="POST">
-        <input type="hidden" name="idObat" th:value="${obat.idObat}"/>
-        Nama: <input type="text" name="nama" maxlength="255" th:value="${obat.nama}" autofocus required/>
-        <br>
-        Tanggal Terbit: <input type="date" name="tanggalTerbit" th:value="${obat.tanggalTerbit}" required/>
-        <br>
-        Harga: <input type="number" name="harga" maxlength="20" th:value="${obat.harga}" required/>
-        <br>
-        Bentuk: <input type="text" name="bentuk" maxlength="255" th:value="${obat.bentuk}" required/>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+        <div class="container">
+            <br>
+            <h3 class="text-center">Tambah Obat</h3>
+            <br>
+            <form th:action="@{/obat/ubah?id={id}(id=${obat.idObat})}" th:object="${obat}" method="POST">
+                <input type="hidden" name="idObat" th:value="${obat.idObat}"/>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2">Nama:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="nama" th:value="${obat.nama}" autofocus required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2">Tanggal Terbit:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="date" name="tanggalTerbit" th:field="${obat.tanggalTerbit}" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2">Harga:</label>
+                    <div class="col-sm-10">
+                            <input class="form-control" type="number" name="harga" maxlength="20" th:value="${obat.harga}" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2">Bentuk:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="bentuk" maxlength="255" th:value="${obat.bentuk}" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-2"></label>
+                    <div class="col-sm-10">
+                            <button class="btn btn-success" type="submit">Submit</button>            
+                    </div>
+                </div>
+            </form>
+        </div>
 </body>
 </html>

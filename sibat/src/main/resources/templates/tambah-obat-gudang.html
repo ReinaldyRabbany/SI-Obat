@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Tambah Obat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<h2 th:text="'Obat ' + ${obat.nama} + ' dengan kode ' + ${obat.kode} + ' berhasil ditambahkan ke ' + ${gudang.nama}"></h2>
+<h2 th:text="'pada tanggal ' + ${date}"></h2>
+</body>
+</html>

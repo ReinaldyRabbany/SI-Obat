@@ -3,8 +3,6 @@ package apap.tugaspemrograman.sibat.service;
 import apap.tugaspemrograman.sibat.repository.ObatDb;
 import apap.tugaspemrograman.sibat.model.ObatModel;
 import apap.tugaspemrograman.sibat.model.GudangModel;
-import apap.tugaspemrograman.sibat.service.GudangService;
-import apap.tugaspemrograman.sibat.model.JenisModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,6 @@ public class ObatServiceImpl implements ObatService {
 
     @Override
     public String generateKode(ObatModel obat) {
-        System.out.println(obat.getBentuk());
 
         String strBentuk = "01";
         if (obat.getBentuk().equals("Kapsul")||obat.getBentuk().equals("kapsul")) {
@@ -40,20 +37,45 @@ public class ObatServiceImpl implements ObatService {
         year=year+5;
         String strYear = String.valueOf(year);
 
+        String randoms = generateRandomStr();
+
+        int yearInput = Calendar.getInstance().get(Calendar.YEAR);
+        String strYearInput = String.valueOf(yearInput);
+
+        String kode = String.valueOf(obat.getJenis().getId())+strBentuk+strYearInput+strYear+randoms;
+
+        if (validateKode(kode)) {
+            return kode;
+        } else {
+            while (!validateKode(kode)) {
+                randoms = generateRandomStr();
+                kode = String.valueOf(obat.getJenis().getId())+strBentuk+strYearInput+strYear+randoms;
+            }
+            return kode;
+        }
+    }
+
+    @Override
+    public String generateRandomStr() {
         String capital = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder sb = new StringBuilder(2);
 
         for (int i = 0; i < 2; i++) {
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
             int index = (int)(capital.length() * Math.random());
-
-            // add Character one by one in end of sb
             sb.append(capital.charAt(index));
         }
-        System.out.println(obat.getJenis());
-        String kode = String.valueOf(obat.getJenis().getId())+strBentuk+"2019"+strYear+sb.toString();
-        return kode;
+        return String.valueOf(sb);
+    }
+
+    @Override
+    public boolean validateKode(String kode) {
+        List<ObatModel> listObat = getListObat();
+        for (int i=0; i<listObat.size(); i++) {
+            if (listObat.get(i).getKode().equals(kode)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -89,12 +111,35 @@ public class ObatServiceImpl implements ObatService {
         return obatDb.findById(idObat);
     }
 
-//    public List<ObatModel> getExpiredObat(GudangModel gedung) {
-//        List<ObatModel> listObat = gedung.getObatList();
-//
-//
-//        for (ObatModel obat : listObat) {
-//            if (obat.getTanggalTerbit() > )
-//        }
-//    }
+    @Override
+    public List<ObatModel> getExpiredObat(GudangModel gudang) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
+        cal.getTimeInMillis();
+        cal.add(Calendar.YEAR, -5);
+
+        List<ObatModel> listObat = gudang.getObatList();
+        List<ObatModel> listResult = new ArrayList<>();
+
+        for (int i = 0; i < listObat.size(); i++) {
+            ObatModel thisObat = listObat.get(i);
+
+            if (thisObat.getTanggalTerbit().before(cal.getTime())) {
+                listResult.add(thisObat);
+            }
+        }
+        return listResult;
+    }
+
+    @Override
+    public void deleteObat(ObatModel obat) {
+        obatDb.delete(obat);
+    }
+
+    @Override
+    public void clearGudangList(ObatModel obat) {
+        ObatModel obatData = obatDb.findById(obat.getIdObat()).get();
+        obatData.getGudangList().clear();
+    }
 }

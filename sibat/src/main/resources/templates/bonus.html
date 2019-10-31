@@ -10,14 +10,10 @@
     <br>
     <div class="container">
         <div class="card">
-            <div class="card-header text-white bg-dark mb-3">
-                Daftar Obat
+            <div class="card-header text-white bg-dark mb-3 h6">
+                Bonus - Jumlah Supplier
             </div>
             <div class="card-body">
-                    <form th:action="@{/obat/tambah}">
-                        <button class="btn btn-primary">Tambah Obat</button>
-                    </form>
-                    <br>
                     <table class="table table-striped text-center" id="obatTable">
                             <thead class="thead-dark">
                                 <tr>
@@ -25,7 +21,7 @@
                                     <th>Kode</th>
                                     <th>Nama</th>
                                     <th>Harga</th>
-                                    <th>Action</th>
+                                    <th>Jumlah Supplier</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,13 +30,7 @@
                                     <td th:text="${obat.kode}"></td>
                                     <td th:text="${obat.nama}"></td>
                                     <td th:text="'Rp'+${obat.harga}"></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a th:href="@{/obat/view?noReg={noReg}(noReg=${obat.nomorRegistrasi})}"><button type="button" class="btn btn-info btn-sm rounded-0">Lihat</button></a>
-                                            <a th:href="@{/obat/ubah?id={id}(id=${obat.idObat})}"><button type="button" class="btn btn-dark btn-sm rounded-0">Ubah</button></a>
-                                            <form th:action="@{/obat/delete?idObat={idObat}(idObat=${obat.idObat})}" method="POST"><button type="submit" class="btn btn-danger btn-sm rounded-0">Hapus</button></form>
-                                        </div>      
-                                    </td>
+                                    <td th:text="${listJmlSupplier[__${iterationStatus.index}__]}"></td>
                                 </tr>
                             </tbody>
                         </table>

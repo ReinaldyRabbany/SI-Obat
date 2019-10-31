@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>View Restoran</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br>
+    <div class="container">
+        <div class="card" style="width: 18rem;">
+            <div class="card-header text-white bg-dark mb-3 h6">
+                Cari Daftar Obat (expired)
+            </div>
+            <div class="card-body">
+                <form th:action="@{/gudang/expired-obat}">
+                    <div class="form-group row">
+                        <select class="form-control" id="gudang" name="idGudang">
+                            <option disabled="disabled" selected="selected">-- Pilih Gudang --</option>
+                            <div th:each="thisGudang : ${list_gudang}">
+                                <option  th:value="${thisGudang.id}" th:text="${thisGudang.nama}"></option>
+                            </div>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    <br>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="alert alert-warning h5 text-center" role="alert" th:text="'Tidak ditemukan obat yang expired di gudang ' + ${gudang.nama}"></div>
+    </div>
+</body>
+</html>

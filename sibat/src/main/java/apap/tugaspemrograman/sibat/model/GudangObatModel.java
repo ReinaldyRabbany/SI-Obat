@@ -14,7 +14,7 @@ public class GudangObatModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

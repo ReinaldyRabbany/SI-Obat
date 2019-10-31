@@ -12,4 +12,5 @@ public interface GudangService {
     Optional<GudangModel> getGudangById(Long id);
     void hapusGudang(GudangModel gudang);
     void addObat(ObatModel obat);
+    void clearObatList(GudangModel gudang);
 }
